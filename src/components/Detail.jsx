@@ -7,6 +7,10 @@ import { FaPlay } from "react-icons/fa";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import slugify from 'react-slugify';
+import { StatsigProvider } from "statsig-react";
+import { useStatsig } from "statsig-react";
+
+//const statsig = useStatsig();
 
 export const Detail = () => {
   const APIKEY = import.meta.env.VITE_API_KEY;
@@ -63,7 +67,7 @@ export const Detail = () => {
         loader ? <div className='h-screen w-full flex justify-center items-center'><span className="loader m-10"></span></div> :
           <>
 
-            <button onClick={()=>history.back()} className='fixed z-10 text-4xl text-black bg-white m-3 md:m-5 rounded-full'><HiChevronLeft /></button>
+            <button onClick={() => { history.back(); statsig.logEvent('DetailClicked'); }} className='fixed z-10 text-4xl text-black bg-white m-3 md:m-5 rounded-full'><HiChevronLeft /></button>
 
 
             {/* poster */}

@@ -6,7 +6,25 @@ import Genre from './Genre';
 import Header from './Header';
 // import { Pagebtn } from './Pagebtn';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Statsig } from "statsig-react";
 
+
+
+/*
+import { CartContext } from '../CartContext';
+
+const Movie = ({ movie }) => {
+  const { addToCart } = useContext(CartContext);
+
+  return (
+    <div>
+      <h2>{movie.title}</h2>
+      <button onClick={() => addToCart(movie)}>Add to Cart</button>
+    </div>
+  );
+};
+
+*/
 
 function Movies() {
 
@@ -35,7 +53,6 @@ function Movies() {
 
 
     return (
-
         <div className='w-full bg-[#10141e] md:p-10 mb-20 md:mb-0'>
             <Genre />
             <Header />
@@ -72,5 +89,5 @@ function Movies() {
         </div>
     )
 }
-
+//Statsig.logEvent("Movies");
 export default Movies

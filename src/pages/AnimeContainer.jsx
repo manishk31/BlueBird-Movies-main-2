@@ -6,6 +6,10 @@ import Search from "../pages/Search"
 import Anime from "../components/Anime";
 
 
+/**
+ * Renders the AnimeContainer component.
+ * @returns {JSX.Element} The rendered AnimeContainer component.
+ */
 function AnimeContainer() {
     const { setMovies } = useContext(Contextpage);
     const { query } = useParams()

@@ -4,7 +4,8 @@ import { getSmashystreamUrl, getSuperembedUrl, get2embedUrl } from '../movies'
 import { useState } from 'react'
 import Contextpage from '../Contextpage'
 import { HiChevronLeft } from "react-icons/hi";
-
+import statsig from 'statsig-js';
+import { Statsig } from "statsig-react";
 
 const Player = () => {
 
@@ -19,6 +20,7 @@ const Player = () => {
         );
         const moviedetail = await data.json();
         setMoviedet(moviedetail);
+        statsig.logEvent('UserCount');
     };
 
       useEffect(() => {

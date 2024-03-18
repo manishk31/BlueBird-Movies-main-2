@@ -31,32 +31,13 @@ const showNothing = 'nothing';
 function App() {
   
   
-  const { value: showUpcoming } = useGate('show_upcoming');
+  const { value: showUpcoming } = useGate('show_upcoming'); //This is from Statsig
+  const { blueBird } = useFlags(); // This is from Launch Darly
+  const { value: multiplegates } = useGate('multiplegates');
   //initialize('client-EzefRU3mZWxayjjaAnomq3ynWvnzIvvzr0UH9TRS8yY', user);
 
-  async function initializeLDProvider() {
-    const LDProvider = await asyncWithLDProvider({
-      clientSideID: '65f6908297a47e0faf36a84a',
-      context: {
-        kind: 'user',
-        key: 'example-user',
-        name: 'Example user',
-      },
-    });
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(
-      <React.StrictMode>
-        <LDProvider>
-          <App />
-        </LDProvider>
-      </React.StrictMode>,
-    );
-    // Use the LDProvider here
-  }
+    
 
-  initializeLDProvider();
-
-  const { blueBird } = useFlags();
 
   return (
     
@@ -84,8 +65,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/trending" element={<Trending />} />
             {showUpcoming ? (
-              <Route path="/upcoming" element={<Upcoming />} />
-            ) : null}
+                 <Route path="/upcoming" element={<Upcoming />} />
+                  ) : (
+                 <Route path="/trending" element={<Trending />} />
+             )}
+
             <Route path="/moviedetail/:id" element={<Detail />} />
             <Route path="/favorite" element={<Favorite />} />
             <Route path="/player/:id/:title" element={<Player />} />{/*Route-1 For Player, Title is just for beauty of url, it is not used anywhere.*/}
@@ -96,10 +80,8 @@ function App() {
             <Route path="/search/" element={<Container />} />
           </Routes>
         </div>
-        <div className="App">
-            <header className="App-header">
-                   <p>{blueBird ? <b>Flag on</b> : <b>Flag off</b>}</p>
-             </header>
+        <div className="App1">
+            
        </div>
        
       </MovieProvider>

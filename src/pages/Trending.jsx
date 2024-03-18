@@ -7,9 +7,14 @@ import Header from '../components/Header';
 import { Helmet } from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+
+import { Statsig } from "statsig-react";
+//statsig.logEvent('Trending');
+
 function Trending() {
 
     const { loader, page, setPage, fetchTrending, trending, totalPage } = useContext(Contextpage);
+   // 
 
     useEffect(() => {
         setPage(1) // Reset Page to 1 on initial render.
@@ -17,7 +22,12 @@ function Trending() {
 
     useEffect(() => {
         if (page > 0) {
+           
             fetchTrending();
+            Statsig.logEvent("Trending", "SKU_9876", {
+                price: "10.99",
+                item_name: "JackDaniels",
+              });
         }
     }, [page])
 

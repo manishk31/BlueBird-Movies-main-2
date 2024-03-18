@@ -6,20 +6,33 @@ import Header from '../components/Header';
 // import { Pagebtn } from '../components/Pagebtn';
 import { Helmet } from 'react-helmet';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Statsigtatsig } from 'statsig-react';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+import { useGate } from 'statsig-react';
+import { Statsig } from "statsig-react";
+//const statsig = useStatsig();
+
+//
 
 function Upcoming() {
 
   const { loader, setPage, page, fetchUpcoming, upcoming, totalPage } = useContext(Contextpage);
-
+  
+  //
   useEffect(() => {
     setPage(1) // Reset Page to 1 on initial render.
   }, []);
 
   useEffect(() => {
-    if (page > 0) {
-      fetchUpcoming();
-    }
-  }, [page])
+      if (page > 0) {
+        
+        fetchUpcoming();
+        Statsig.logEvent("Upcoming", "SKU_12345", {
+          price: "9.99",
+          item_name: "diet_coke_48_pack",
+        });
+      }
+    }, [page]);
 
 
   return (

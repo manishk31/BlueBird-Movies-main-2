@@ -4,8 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useAuthState } from "react-firebase-hooks/auth"
+
 // ===================================
 import { toast } from 'react-toastify';
+const APIKEY = import.meta.env.VITE_API_KEY;
+
+
+const fetchAnime = async (query) => {
+  const data = await fetch(
+    `https://api.themoviedb.org/3/discover/movie?with_genres=${activegenre}&api_key=${APIKEY}&with_keywords=210024|287501&page=${page}`
+  );
+  const filteredGenre = await data.json();
+  setMovies(movies.concat(filteredGenre.results));
+  setTotalPage(filteredGenre.total_pages);
+  setLoader(false);
+  setHeader("Anime");
+}
 
 const Contextpage = createContext();
 
@@ -66,29 +80,41 @@ export function MovieProvider({ children }) {
     setLoader(false);
     setHeader("Anime");
   }
+// Remove the duplicate declaration of fetchGenre function
+// const fetchGenre = async () => {
 
+// Remove the duplicate declaration of fetchTrending function
+// const fetchTrending = async () => {
+const fetchTrending = async () => {
+  const data = await fetch(
+    `https://api.themoviedb.org/3/trending/movie/day?api_key=${APIKEY}&with_origin_country=IN&page=${page}`
+  );
+  const trend = await data.json();
+  setTrending(trending.concat(trend.results));
+  setTotalPage(trend.total_pages);
+  setLoader(false);
+  setHeader("Trending Movies");
+}
+
+// Remove the duplicate declaration of fetchUpcoming function
+// const fetchUpcoming = async () => {
+
+  // Remove the duplicate declaration of fetchGenre function
+  // const fetchGenre = async () => {
   const fetchGenre = async () => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=179dcdca08f782f18dbaa422e1142a10&with_origin_country=IN&language=en-US`
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${APIKEY}&with_origin_country=IN&language=en-US`
     );
     const gen = await data.json();
     setGenres(gen.genres);
   }
 
-  const fetchTrending = async () => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/day?api_key=179dcdca08f782f18dbaa422e1142a10&with_origin_country=IN&page=${page}`
-    );
-    const trend = await data.json();
-    setTrending(trending.concat(trend.results));
-    setTotalPage(trend.total_pages);
-    setLoader(false);
-    setHeader("Trending Movies");
-  }
+  // Remove the duplicate declaration of fetchTrending function
+  // const fetchTrending = async () => {
 
   const fetchUpcoming = async () => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=179dcdca08f782f18dbaa422e1142a10&with_origin_country=IN&language=en-US&page=${page}`
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${APIKEY}&with_origin_country=IN&language=en-US&page=${page}`
     );
     const upc = await data.json();
     setUpcoming(upcoming.concat(upc.results));
@@ -153,6 +179,7 @@ export function MovieProvider({ children }) {
     >
       {children}
     </Contextpage.Provider>
+    
   );
 
 }
